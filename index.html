@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maisonya E-Shop</title>
+  <link rel="stylesheet" href="Styles.css" />
+</head>
+<body>
+  <header>
+    <div id="goHome" style="cursor: default;"><h1 class="site-title" style="cursor:default;">Maisonya</h1></div>
+    
+    <div class="header-actions">
+      <button id="theme-toggle">🌗</button>
+      <div id="cart-btn">🛍️ <span id="cart-count">0</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>  ✨✨ Maisonya  راحتك تبدأ من</h2>
+      <p style="font-size: 35px;">⚡🚚 كلشي ساهل ...... و التوصيل مجاني و سريع </p>
+      <p style="font-size: 33px;"> 😊😊  تسوق دابا....... و الباقي علينا</p>
+    </section>
+
+    <section class="products">
+      <div class="product-card" data-name="Bosch Drill" data-price="150.99" data-image="assets/drill.jpg">
+        <img src="assets/35059169.jpg" alt="Bosch Drill" />
+        <h3>Bosch Drill</h3>
+        <p class="price">
+           <span class="new-price">199,99 DH</span>
+        <span class="old-price">250 DH</span>
+        </p>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Electric Screwdriver" data-price="200" data-image="assets/drill.jpg">
+        <img src="assets/106633-1.jpg" alt="Screwdriver" />
+        <h3>Electric Screwdriver</h3>
+        <p class="price">
+           <span class="new-price">199,99 DH</span>
+        <span class="old-price">250 DH</span>
+        </p>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="product-card" 
+     data-name="Power Grinder" 
+     data-price="200" 
+     data-image="assets/drill.jpg">
+
+    <img src="assets/smart-lamp.jpg" alt="Grinder" />
+
+    <h3>Power Grinder</h3>
+
+    <!-- New Updated Price Format -->
+    <p class="price">
+        <span class="new-price">199,99 DH</span>
+        <span class="old-price">250 DH</span>
+    </p>
+
+    <button class="add-to-cart">Add to Cart</button>
+</div>
+
+    </section>
+  </main>
+
+  <!-- Cart Sidebar -->
+  <aside id="cart-sidebar">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <div class="cart-total">
+      <strong>Total:</strong> <span id="cart-total"> 0.00</span> DH 
+    </div>
+    <button id="checkout-btn">Checkout</button>
+    <button id="close-cart">Close</button>
+  </aside>
+
+  <!-- Overlay -->
+  <div id="overlay"></div>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal">
+    <div class="checkout-content">
+      <h2>Confirm Your Order</h2>
+      <form id="checkout-form">
+        <input type="text" id="cust-name" placeholder="Full Name" required />
+        <input type="tel" id="cust-phone" placeholder="Phone Number" required />
+        <input type="text" id="cust-address" placeholder="Address" required />
+        <button type="submit">Send Order ✅</button>
+        <button type="button" id="cancel-checkout">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p style="font-size: 20px;">© 2025 Maisonya — Designed with ❤️ by AYOUBDEV7</p>
+  </footer>
+
+  <script src="Script.js"></script>
+</body>
+</html>
