@@ -148,5 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 document.getElementById("goHome").addEventListener("click", function () {
-    window.location.href = "Homepage.html"; 
+    window.location.href = "https://ayyoubdev7.github.io/MaisonyaShop/"; 
 });
+
