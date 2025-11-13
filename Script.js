@@ -85,36 +85,55 @@ cancelCheckout.addEventListener("click", () => {
   checkoutModal.classList.remove("active");
 });
 
-// WhatsApp order
+/* ---------------- Submit order: WhatsApp + Google Sheet (beacon GET) ---------------- */
+
+/*
+  IMPORTANT:
+  - This uses a GET "beacon" approach (Image.src) to avoid CORS issues.
+  - Your Apps Script must accept GET requests (doGet) and be deployed
+    with access "Anyone, even anonymous".
+  - Script URL must be the "web app" URL (you already provided it).
+*/
+
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCCdI6SBq5ZtsAXLJwaTB_2dhtHIXeyFnJbbpm7QsGsVw5mfT3bj9PHAauTZmM1wxr/exec";
+const MERCHANT_WHATSAPP = "212642778240"; // your Whatsapp number
+
 checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
   const name = document.getElementById("cust-name").value.trim();
   const phone = document.getElementById("cust-phone").value.trim();
   const address = document.getElementById("cust-address").value.trim();
 
-  const merchantPhone = "212642778240"; // ✅ Correct format for Morocco
   const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0).toFixed(2);
+
+  // Build WhatsApp message (keeps your original format)
   let message = `🏠 *New Order — Maisonya*%0A`;
-  message += `👤 *Name:* ${name}%0A`;
-  message += `📞 *Phone:* ${phone}%0A`;
-  message += `📍 *Address:* ${address}%0A%0A`;
+  message += `👤 *Name:* ${encodeURIComponent(name)}%0A`;
+  message += `📞 *Phone:* ${encodeURIComponent(phone)}%0A`;
+  message += `📍 *Address:* ${encodeURIComponent(address)}%0A%0A`;
   message += `🛒 *Order Details:*%0A`;
-
   cart.forEach((item) => {
-    message += `• ${item.name} x${item.qty} = $${(item.price * item.qty).toFixed(2)}%0A`;
+    message += `• ${encodeURIComponent(item.name)} x${item.qty} = ${(item.price * item.qty).toFixed(2)} DH%0A`;
   });
+  message += `%0A💰 *Total:* ${total} DH%0A🕒 ${encodeURIComponent(new Date().toLocaleString())}`;
 
-  message += `%0A💰 *Total:* $${total}%0A🕒 ${new Date().toLocaleString()}`;
-
-  // Open WhatsApp
-  const whatsappURL = `https://wa.me/${merchantPhone}?text=${message}`;
+  // open WhatsApp
+  const whatsappURL = `https://wa.me/${MERCHANT_WHATSAPP}?text=${message}`;
   window.open(whatsappURL, "_blank");
 
-  // Reset
-  cart = [];
-  updateCart();
-  checkoutModal.classList.remove("active");
-});
+  // Send to Google Sheet via GET "beacon" (image ping) to avoid CORS
+  try {
+    // prepare params (encode)
+    const orderText = cart.map(i => `${i.name} x${i.qty} (${(i.price * i.qty).toFixed(2)} DH)`).join(" | ");
+    const params = new URLSearchParams({
+      name,
+      phone,
+      address,
+      total,
+      order: orderText,
+      date: new Date().toLocaleString()
+    });
 // ✅ Handle Checkout Submit
 document.addEventListener("DOMContentLoaded", () => {
   const checkoutForm = document.getElementById("checkout-form");
@@ -150,4 +169,5 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("goHome").addEventListener("click", function () {
     window.location.href = "https://ayyoubdev7.github.io/MaisonyaShop/"; 
 });
+
 
