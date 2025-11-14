@@ -104,8 +104,20 @@ cancelCheckout.addEventListener("click", () => {
 });
 
 // ------------------- GOOGLE SHEET + WHATSAPP -------------------
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSr9sEcLa0ABeR12D8oe5etlp-Qaacp_WLTdhwoxIqQsjouBUlkh7C6vJaYy8MhoBh/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbym49sQNlbkVRgRNNIb2hRrbAtVfNW23BGnKsTh7a8ya6at8WEyumCbbhl9CNOaEySZ/exec";
 const MERCHANT_WHATSAPP = "212642778240"; // your WhatsApp number
+// Send data to Google Sheets
+const params = new URLSearchParams({
+  name,
+  phone,
+  address,
+  order: cart.map(i => `${i.name} x${i.qty}`).join(", "),
+  total,
+  date: new Date().toLocaleString()
+});
+
+const beacon = new Image();
+beacon.src = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
 
 checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -197,3 +209,4 @@ popupStyle.textContent = `
 }
 `;
 document.head.appendChild(popupStyle);
+
